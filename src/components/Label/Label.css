@@ -1,0 +1,44 @@
+.root {
+    background-color: white;
+    width: 7cm;
+    height: 3.3cm;
+    display: grid;
+    color: black;
+    grid-template-columns: 3cm 1fr;
+}
+
+.logo {
+    justify-self: center;
+    align-self: center;
+    padding: 0.2cm;
+    height: 2cm;
+    width: 2cm;
+}
+
+
+.body {
+text-align: left;
+}
+
+.name {
+font-size: x-large;
+}
+
+.youCanCallMe {
+   font-size: small;
+}
+.line {
+    margin-top: 1cm;
+    border: 1px solid black;
+    margin-right: 1cm;
+}
+
+.icons {
+    margin: 0.2cm 0.2cm 0 0;
+    text-align: right;
+}
+
+.icon {
+    margin-left:0.1cm;
+}
+

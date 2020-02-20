@@ -1,0 +1,45 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  /* display: none; */
+
+color:white;
+}
+
+
+.previewHeading {
+  padding:1rem;
+}
+
+.previewBox{
+  display: flex;
+  justify-content: center;
+}
+.printButton {
+  margin-top: 2rem;
+}
+
+.toPrint {
+  display: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media print {
+  .App {
+      display: none;
+  }
+
+  .toPrint {
+      display: inherit;
+  }
+}
+
+/* A4 Landscape*/
+@page {
+  size: A4 portrait;
+  margin: 10%;
+}
