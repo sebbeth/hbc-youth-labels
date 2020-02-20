@@ -1,0 +1,12 @@
+.iconButtonRoot {
+    color: black;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 2px;
+    margin:0.5rem;
+    justify-content: center;
+}
+
+.iconButtonSelected {
+    background-color: coral;
+}

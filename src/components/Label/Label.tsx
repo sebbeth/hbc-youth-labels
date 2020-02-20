@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export interface ILabelProps {
-    name: String;
-    icons: String[];
+    name: string;
+    icons: string[];
 }
 
 const Label: React.FC<ILabelProps> = (props) => {

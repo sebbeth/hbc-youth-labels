@@ -9,6 +9,15 @@
 color:white;
 }
 
+.iconsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  margin:2rem 0;
+  justify-content: center;
+  width: 100%;
+  height: 20rem;
+}
+
 
 .previewHeading {
   padding:1rem;
