@@ -1,16 +1,22 @@
+@font-face {
+    font-family: BrandonGrotesque;
+    src: url("https://hbcapp.com/tmp/HVD%20Fonts%20-%20BrandonGrotesque-Regular.otf") format("opentype");
+  }
+
 .root {
+    font-family: 'BrandonGrotesque', Fallback, sans-serif;
+
     background-color: white;
-    width: 7cm;
-    height: 3.3cm;
+    width: 7.3cm;
+    height: 3.7cm;
     display: grid;
     color: black;
-    grid-template-columns: 3cm 1fr;
+    grid-template-columns: 2.6cm 1fr;
 }
 
 .logo {
     justify-self: center;
     align-self: center;
-    padding: 0.2cm;
     height: 2cm;
     width: 2cm;
 }
@@ -21,6 +27,8 @@ text-align: left;
 }
 
 .name {
+    font-family: 'BrandonGrotesque', Fallback, sans-serif;
+
 font-size: x-large;
 }
 

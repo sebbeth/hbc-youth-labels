@@ -1,10 +1,12 @@
+
+
 .App {
+  font-family: 'BrandonGrotesque', Fallback, sans-serif;
   text-align: center;
   background-color: #282c34;
   height: 100vh;
   width: 100vw;
   text-align: center;
-  /* display: none; */
 
 color:white;
 }
@@ -32,8 +34,11 @@ color:white;
 }
 
 .toPrint {
-  display: none;
-  display: flex;
+  display: grid;
+  font-family: 'BrandonGrotesque', Fallback, sans-serif;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.1cm; 
+  margin: 0.1cm;
   flex-wrap: wrap;
 }
 
@@ -43,12 +48,12 @@ color:white;
   }
 
   .toPrint {
-      display: inherit;
+      display: grid;
   }
 }
 
-/* A4 Landscape*/
+/* A4 Landscape */
 @page {
   size: A4 portrait;
-  margin: 10%;
+  margin: 0%;
 }

@@ -16,14 +16,12 @@ function App() {
   function submit() {
     if (fileInputRef.current?.files?.length === 1) {
       const file = fileInputRef.current?.files[0];
-      console.log(file);
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target) {
           let contents = event.target.result?.toString().replace(/"/g, '');
           const lines = contents?.split('\n'); // TODO get prefered names
           lines?.splice(0, 1); // Ignore the first line
-          console.log(lines);
           if (lines) setNames(lines);
 
         }
@@ -33,7 +31,6 @@ function App() {
   }
 
   function onIconButtonClicked(icon: string, enabled: boolean) {
-    console.log(icon, enabled);
     const newSelected = [...selectedIcons];
     if (enabled) {
       newSelected.push(icon);
@@ -72,6 +69,7 @@ function App() {
             )
           }
         </div>
+        <button onClick={() => setSelectedIcons([])}>Clear</button>
         {
           (names.length > 0) &&
           <>
