@@ -1,81 +1,120 @@
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/1da05b/0000000000000000000132df/27/l?subset_id=2&fvd=n4&v=3) format("woff2"), url(https://use.typekit.net/af/1da05b/0000000000000000000132df/27/d?subset_id=2&fvd=n4&v=3) format("woff"), url(https://use.typekit.net/af/1da05b/0000000000000000000132df/27/a?subset_id=2&fvd=n4&v=3) format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
 
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/d8f71f/0000000000000000000132e1/27/l?subset_id=2&fvd=n5&v=3) format("woff2"), url(https://use.typekit.net/af/d8f71f/0000000000000000000132e1/27/d?subset_id=2&fvd=n5&v=3) format("woff"), url(https://use.typekit.net/af/d8f71f/0000000000000000000132e1/27/a?subset_id=2&fvd=n5&v=3) format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/8f4e31/0000000000000000000132e3/27/l?subset_id=2&fvd=n7&v=3) format("woff2"), url(https://use.typekit.net/af/8f4e31/0000000000000000000132e3/27/d?subset_id=2&fvd=n7&v=3) format("woff"), url(https://use.typekit.net/af/8f4e31/0000000000000000000132e3/27/a?subset_id=2&fvd=n7&v=3) format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/031bc7/0000000000000000000132e5/27/l?subset_id=2&fvd=n9&v=3) format("woff2"), url(https://use.typekit.net/af/031bc7/0000000000000000000132e5/27/d?subset_id=2&fvd=n9&v=3) format("woff"), url(https://use.typekit.net/af/031bc7/0000000000000000000132e5/27/a?subset_id=2&fvd=n9&v=3) format("opentype");
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/32d3ee/0000000000000000000132e0/27/l?subset_id=2&fvd=i4&v=3) format("woff2"), url(https://use.typekit.net/af/32d3ee/0000000000000000000132e0/27/d?subset_id=2&fvd=i4&v=3) format("woff"), url(https://use.typekit.net/af/32d3ee/0000000000000000000132e0/27/a?subset_id=2&fvd=i4&v=3) format("opentype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: brandon-grotesque;
+    src: url(https://use.typekit.net/af/383ab4/0000000000000000000132e4/27/l?subset_id=2&fvd=i7&v=3) format("woff2"), url(https://use.typekit.net/af/383ab4/0000000000000000000132e4/27/d?subset_id=2&fvd=i7&v=3) format("woff"), url(https://use.typekit.net/af/383ab4/0000000000000000000132e4/27/a?subset_id=2&fvd=i7&v=3) format("opentype");
+    font-weight: 700;
+    font-style: italic;
+}
 
 .App {
-  font-family: 'BrandonGrotesque', Fallback, sans-serif;
-  text-align: center;
-  color: #272a32;  height: 100vh;
-  width: 100vw;
-  text-align: center;
-
+    font-family: brandon-grotesque;
+    text-align: center;
+    color: #272a32;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
 }
 
 .app-heading {
-  padding: 1rem;
+    padding: 1rem;
 }
 
 .iconsGrid {
-  display: flex;
-  flex-wrap: wrap;
-  margin:2rem 0;
-  justify-content: center;
-  max-height: 20rem;
-  width: 100%;
-  height: 20rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+    justify-content: center;
+    max-height: 20rem;
+    width: 100%;
+    height: 20rem;
 }
-
 
 .previewHeading {
-  padding:1rem;
+    padding: 1rem;
 }
 
-.previewBox{
-  display: flex;
-  justify-content: center;
+.previewBox {
+    display: flex;
+    justify-content: center;
 }
 
 .button {
-  border-radius: 3px;
-  background-color: #0d426a;
-  border-color: #0d426a;
-  color: white;
-  text-transform: uppercase;
-  padding: 13px 26px;
-  font-size: 14px;
+    border-radius: 3px;
+    background-color: #0d426a;
+    border-color: #0d426a;
+    color: white;
+    text-transform: uppercase;
+    padding: 13px 26px;
+    font-size: 14px;
     font-weight: 700;
     font-style: normal;
-  font-family: brandon-grotesque;
 }
 
 .button:disabled {
-  background-color: #0d426a61;
-  border-color: #0d426a61;
+    background-color: #0d426a61;
+    border-color: #0d426a61;
 }
 
 .printButton {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 .toPrint {
-  display: none;
-  font-family: 'BrandonGrotesque', Fallback, sans-serif;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 0.1cm; 
-  margin: 0.1cm;
-  flex-wrap: wrap;
+    display: none;
+    font-family: 'BrandonGrotesque', Fallback, sans-serif;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 0.1cm;
+    margin: 0.1cm;
+    flex-wrap: wrap;
 }
 
 @media print {
-  .App {
-      display: none;
-  }
-
-  .toPrint {
-      display: grid;
-  }
+    .App {
+        display: none;
+    }
+    .toPrint {
+        display: grid;
+    }
 }
 
+
 /* A4 Landscape */
+
 @page {
-  size: A4 portrait;
-  margin: 0%;
+    size: A4 portrait;
+    margin: 0%;
 }

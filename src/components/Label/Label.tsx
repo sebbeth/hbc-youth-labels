@@ -25,12 +25,22 @@ const Label: React.FC<ILabelProps> = (props) => {
                         })
                     }
                 </div>
-                <div className={"name"}>{props.name}</div>
+                <div className={"name"}>{parseName(props.name)}</div>
                 <div className={"youCanCallMe"}>But you can call me...</div>
                 <hr className={"line"} />
             </div>
         </div>
     );
+}
+
+function parseName(name: string) {
+    if (name.indexOf("(") !== -1) {
+        const regex = /\(([^)]+)\)/;
+        const matches = name.match(regex);
+        if (matches) return matches[1];
+    } else {
+        return name;
+    }
 }
 
 export default Label;
