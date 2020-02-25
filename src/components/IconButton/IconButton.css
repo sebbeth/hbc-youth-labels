@@ -1,12 +1,14 @@
 .iconButtonRoot {
-    color: black;
-    height: 2rem;
-    width: 2rem;
+    color: #272a32;
+    height: 2.2rem;
+    width: 2.2rem;
+    font-size: larger;
+    text-align: center;
     border-radius: 2px;
     margin:0.5rem;
-    justify-content: center;
 }
 
 .iconButtonSelected {
-    background-color: coral;
+    background-color: #0d426a;
+    color: white;
 }

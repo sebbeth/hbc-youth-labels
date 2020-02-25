@@ -4,8 +4,7 @@ import { mockNames } from '../../helpers/MockData';
 import Label from '../Label/Label';
 import { library, IconProp, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
 import IconButton from '../IconButton/IconButton';
-import { faCheckSquare, faCoffee, faRocket, faStar, faAddressBook, faAd, faAlignCenter, faAllergies, faAngry, faAtom } from '@fortawesome/free-solid-svg-icons'
-const availableIcons = [faCheckSquare, faCoffee, faRocket, faStar, faAddressBook, faAd, faAlignCenter, faAllergies, faAngry, faAtom];
+import { availableIcons } from '../../helpers/FontAwesome.helper';
 library.add(...availableIcons)
 function App() {
 
@@ -50,12 +49,15 @@ function App() {
   return (
     <div>
       <div className="App">
-        <div>
-          Drop file here
+        <div className="app-heading">
+          Export <a href="https://hbc.elvanto.com.au/report/?id=d518fd62-9ee2-40d0-ac6f-c3bb35cc2803&authkey=AnyB6Hvz">This Report</a> as a .csv and upload it here:
       </div>
         <div>
           <input type="file" ref={fileInputRef} />
-          <button onClick={() => submit()}>Submit</button>
+          <button className="button" onClick={() => submit()}>Submit</button>
+        </div>
+        <div className="app-heading">
+          Select some icons:
         </div>
         <div className="iconsGrid">
           {
@@ -69,7 +71,10 @@ function App() {
             )
           }
         </div>
-        <button onClick={() => setSelectedIcons([])}>Clear</button>
+        <button
+          className="button"
+          onClick={() => setSelectedIcons([])}
+          disabled={selectedIcons.length < 0} >Clear</button>
         {
           (names.length > 0) &&
           <>
@@ -79,8 +84,7 @@ function App() {
             <div className={"previewBox"}>
               <Label name={names[0]} icons={selectedIcons} />
             </div>
-            <button onClick={() => print()} className="printButton" >Print</button>
-
+            <button onClick={() => print()} className="button printButton" >Print</button>
           </>
         }
       </div>
