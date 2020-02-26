@@ -103,6 +103,11 @@
 }
 
 @media print {
+    html,
+    body {
+        width: 210mm;
+        height: 297mm;
+    }
     .App {
         display: none;
     }
@@ -111,10 +116,7 @@
     }
 }
 
-
-/* A4 Landscape */
-
 @page {
     size: A4 portrait;
-    margin: 0%;
+    margin: 1cm 5mm 5mm 5mm;
 }

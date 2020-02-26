@@ -2,14 +2,16 @@ import React from 'react';
 import './App.css';
 import { mockNames } from '../../helpers/MockData';
 import Label from '../Label/Label';
-import { library, IconProp, findIconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { library, IconProp, findIconDefinition, icon } from '@fortawesome/fontawesome-svg-core'
 import IconButton from '../IconButton/IconButton';
 import { availableIcons } from '../../helpers/FontAwesome.helper';
 library.add(...availableIcons)
+
 function App() {
 
-  const [names, setNames] = React.useState<string[]>(mockNames);
-  const [selectedIcons, setSelectedIcons] = React.useState<string[]>([]);
+  const [names, setNames] = React.useState<string[]>([]);
+  const [lineHeight, setLineHeight] = React.useState<string>("34.7");
+  const [selectedIcons, setSelectedIcons] = React.useState<string[]>(getIcons());
   const fileInputRef = React.createRef<HTMLInputElement>();
   const icons = availableIcons.map(icon => icon.iconName);
   function submit() {
@@ -19,31 +21,31 @@ function App() {
       reader.onload = (event) => {
         if (event.target) {
           let contents = event.target.result?.toString().replace(/"/g, '');
-          const lines = contents?.split('\n'); // TODO get prefered names
+          const lines = contents?.split('\n');
           lines?.splice(0, 1); // Ignore the first line
           if (lines) setNames(lines);
-
         }
       }
       reader.readAsText(file);
     }
   }
 
+  function setIcons(icons: string[]) {
+    window.localStorage.setItem("icons", JSON.stringify(icons));
+    setSelectedIcons(icons);
+  }
+
   function onIconButtonClicked(icon: string, enabled: boolean) {
     const newSelected = [...selectedIcons];
     if (enabled) {
       newSelected.push(icon);
-      setSelectedIcons(newSelected);
+      setIcons(newSelected);
     } else {
       newSelected.splice(newSelected.indexOf(icon), 1);
     }
-    setSelectedIcons(newSelected);
+    setIcons(newSelected);
 
 
-  }
-
-  function print() {
-    window.print();
   }
 
   return (
@@ -55,6 +57,10 @@ function App() {
         <div>
           <input type="file" ref={fileInputRef} />
           <button className="button" onClick={() => submit()}>Submit</button>
+        </div>
+        <div>
+          Label height (mm):
+          <input value={lineHeight} type="text" onChange={(e) => setLineHeight(e.target.value)} />
         </div>
         <div className="app-heading">
           Select some icons:
@@ -71,10 +77,14 @@ function App() {
             )
           }
         </div>
-        <button
-          className="button"
-          onClick={() => setSelectedIcons([])}
-          disabled={selectedIcons.length < 0} >Clear</button>
+        {
+          (selectedIcons.length > 0) &&
+          <button
+            className="button"
+            onClick={() => setIcons([])}>
+            Clear
+          </button>
+        }
         {
           (names.length > 0) &&
           <>
@@ -82,9 +92,9 @@ function App() {
               Preview
           </div>
             <div className={"previewBox"}>
-              <Label name={names[0]} icons={selectedIcons} />
+              <Label name={names[0]} height={parseFloat(lineHeight)} icons={selectedIcons} />
             </div>
-            <button onClick={() => print()} className="button printButton" >Print</button>
+            <button onClick={() => window.print()} className="button printButton" >Print</button>
           </>
         }
       </div>
@@ -92,7 +102,7 @@ function App() {
         {
           (names.length > 0) ?
             names.map((name, index) => {
-              return (<Label key={index} name={name} icons={selectedIcons} />)
+              return (<Label key={index} name={name} height={parseFloat(lineHeight)} icons={selectedIcons} />)
             })
 
             :
@@ -101,6 +111,18 @@ function App() {
       </div>
     </div>
   );
+}
+
+/**
+ * returns the icons object from localStorage
+ */
+function getIcons() {
+  const iconsString = window.localStorage.getItem("icons");
+  if (iconsString) {
+    return JSON.parse(iconsString);
+  } else {
+    return [];
+  }
 }
 
 export default App;

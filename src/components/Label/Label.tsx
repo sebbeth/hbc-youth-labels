@@ -7,27 +7,30 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export interface ILabelProps {
     name: string;
     icons: string[];
+    height: number;
 }
 
 const Label: React.FC<ILabelProps> = (props) => {
     return (
-        <div className="root">
-            <img className={"logo"} src={youthLogo} />
-            <div className={"body"}>
-                <div className={"icons"}>
-                    {
-                        props.icons.map((icon, index) => {
-                            return (<FontAwesomeIcon
-                                key={index}
-                                icon={icon as IconProp}
-                                className="icon"
-                            />)
-                        })
-                    }
+        <div style={{ height: `${props.height + 2.3}mm` }}>
+            <div className="label">
+                <img className={"logo"} src={youthLogo} />
+                <div className={"body"}>
+                    <div className={"icons"}>
+                        {
+                            props.icons.map((icon, index) => {
+                                return (<FontAwesomeIcon
+                                    key={index}
+                                    icon={icon as IconProp}
+                                    className="icon"
+                                />)
+                            })
+                        }
+                    </div>
+                    <div className={"name"}>{parseName(props.name)}</div>
+                    <div className={"youCanCallMe"}>But you can call me...</div>
+                    <hr className={"line"} />
                 </div>
-                <div className={"name"}>{parseName(props.name)}</div>
-                <div className={"youCanCallMe"}>But you can call me...</div>
-                <hr className={"line"} />
             </div>
         </div>
     );

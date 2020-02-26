@@ -1,11 +1,12 @@
-.root {
+.label {
     background-color: white;
-    width: 7.3cm;
     height: 3.7cm;
     display: grid;
     color: black;
     grid-template-columns: 2.6cm 1fr;
     font-family: brandon-grotesque;
+    width: 6.7cm;
+    height: 3.7cm;
 }
 
 .logo {
@@ -28,13 +29,13 @@
 }
 
 .line {
-    margin-top: 1cm;
+    margin-top: 5mm;
     border: 1px solid black;
-    margin-right: 1cm;
+    margin-right: 2mm;
 }
 
 .icons {
-    height: 0.48cm;
+    height: 0.49cm;
     overflow: hidden;
     margin: 0.2cm 0.2cm 0 0;
     text-align: right;
