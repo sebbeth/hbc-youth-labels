@@ -3,8 +3,10 @@ import './App.css';
 import { mockNames } from '../../helpers/MockData';
 import Label from '../Label/Label';
 import { library, IconProp, findIconDefinition, icon } from '@fortawesome/fontawesome-svg-core'
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import IconButton from '../IconButton/IconButton';
 import { availableIcons } from '../../helpers/FontAwesome.helper';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(...availableIcons)
 
 function App() {
@@ -101,6 +103,7 @@ function App() {
             <button onClick={() => window.print()} className="button printButton" >Print</button>
           </>
         }
+        <a target="_blank" title="View code" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon icon={faGithub} /> </a>
       </div>
       <div className="toPrint">
         {
