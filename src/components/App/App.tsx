@@ -9,7 +9,8 @@ library.add(...availableIcons)
 
 function App() {
 
-  const [names, setNames] = React.useState<string[]>([]);
+  const [names, setNames] = React.useState<string[]>((window.location.href.includes("localhost")) ? mockNames : []);
+
   const [lineHeight, setLineHeight] = React.useState<string>("34.7");
   const [selectedIcons, setSelectedIcons] = React.useState<string[]>(getIcons());
   const fileInputRef = React.createRef<HTMLInputElement>();
@@ -51,6 +52,9 @@ function App() {
   return (
     <div>
       <div className="App">
+        <h2>
+          HBC Youth Labels
+        </h2>
         <div className="app-heading">
           Export <a href="https://hbc.elvanto.com.au/report/?id=d518fd62-9ee2-40d0-ac6f-c3bb35cc2803&authkey=AnyB6Hvz">This Report</a> as a .csv and upload it here:
       </div>

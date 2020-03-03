@@ -12,24 +12,26 @@ export interface ILabelProps {
 
 const Label: React.FC<ILabelProps> = (props) => {
     return (
-        <div style={{ height: `${props.height + 2.3}mm` }}>
+        <div className="container" style={{ height: `${props.height + 0.2}mm` }}>
             <div className="label">
-                <img className={"logo"} src={youthLogo} />
-                <div className={"body"}>
-                    <div className={"icons"}>
-                        {
-                            props.icons.map((icon, index) => {
-                                return (<FontAwesomeIcon
-                                    key={index}
-                                    icon={icon as IconProp}
-                                    className="icon"
-                                />)
-                            })
-                        }
+                <div className={"icons"}>
+                    {
+                        props.icons.map((icon, index) => {
+                            return (<FontAwesomeIcon
+                                key={index}
+                                icon={icon as IconProp}
+                                className="icon"
+                            />)
+                        })
+                    }
+                </div>
+                <div className={"logoAndText"}>
+                    <img className={"logo"} src={youthLogo} />
+                    <div className={"body"}>
+                        <div className={"name"}>{parseName(props.name)}</div>
+                        <div className={"youCanCallMe"}>But you can call me...</div>
+                        <hr className={"line"} />
                     </div>
-                    <div className={"name"}>{parseName(props.name)}</div>
-                    <div className={"youCanCallMe"}>But you can call me...</div>
-                    <hr className={"line"} />
                 </div>
             </div>
         </div>

@@ -78,8 +78,8 @@
     border-color: #0d426a;
     color: white;
     text-transform: uppercase;
-    padding: 13px 26px;
-    font-size: 14px;
+    padding: 10px 18px;
+    font-size: 12px;
     font-weight: 700;
     font-style: normal;
 }
@@ -118,5 +118,5 @@
 
 @page {
     size: A4 portrait;
-    margin: 1cm 5mm 5mm 5mm;
+    margin: 11mm 5mm 15mm 5mm;
 }
