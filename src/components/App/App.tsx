@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { mockNames } from '../../helpers/MockData';
 import Label from '../Label/Label';
-import { library, IconProp, findIconDefinition, icon } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import IconButton from '../IconButton/IconButton';
 import { availableIcons } from '../../helpers/FontAwesome.helper';
@@ -105,7 +105,7 @@ function App() {
         </div>
       </div>
       <div className="footer">
-        <a target="_blank" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon title="View code" icon={faGithub} size={"lg"} /></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon title="View code" icon={faGithub} size={"lg"} /></a>
         {
 
           <button onClick={() => window.print()} className="button" >Print</button>

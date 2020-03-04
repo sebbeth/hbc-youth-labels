@@ -2,7 +2,6 @@ import React from 'react';
 import './Label.css';
 import youthLogo from './youth-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export interface ILabelProps {
     name: string;
@@ -26,7 +25,7 @@ const Label: React.FC<ILabelProps> = (props) => {
                     }
                 </div>
                 <div className={"logoAndText"}>
-                    <img className={"logo"} src={youthLogo} />
+                    <img alt={"Youth Logo"} className={"logo"} src={youthLogo} />
                     <div className={"body"}>
                         <div className={"name"}>{parseName(props.name)}</div>
                         <div className={"youCanCallMe"}>But you can call me...</div>
