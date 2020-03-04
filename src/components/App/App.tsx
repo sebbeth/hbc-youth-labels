@@ -24,8 +24,9 @@ function App() {
       reader.onload = (event) => {
         if (event.target) {
           let contents = event.target.result?.toString().replace(/"/g, '');
-          const lines = contents?.split('\n');
+          let lines = contents?.split('\n');
           lines?.splice(0, 1); // Ignore the first line
+          lines = lines?.filter(line => line !== "");
           if (lines) setNames(lines);
         }
       }
@@ -54,56 +55,61 @@ function App() {
   return (
     <div>
       <div className="App">
-        <h2>
-          HBC Youth Labels
+        <div className="optionsPanel">
+          <h2>
+            HBC Youth Labels
         </h2>
-        <div className="app-heading">
-          Export <a href="https://hbc.elvanto.com.au/report/?id=d518fd62-9ee2-40d0-ac6f-c3bb35cc2803&authkey=AnyB6Hvz">This Report</a> as a .csv and upload it here:
-      </div>
-        <div>
-          <input type="file" ref={fileInputRef} />
-          <button className="button" onClick={() => submit()}>Submit</button>
-        </div>
-        <div>
-          Label height (mm):
+          <div>
+            <span>Export <a href="https://hbc.elvanto.com.au/report/?id=d518fd62-9ee2-40d0-ac6f-c3bb35cc2803&authkey=AnyB6Hvz">this report</a> as a .csv and upload it here: </span>
+            <input type="file" ref={fileInputRef} onChange={() => submit()} />
+          </div>
+          <div className={"optionLine"}>
+            Label height (mm):
           <input value={lineHeight} type="text" onChange={(e) => setLineHeight(e.target.value)} />
-        </div>
-        <div className="app-heading">
-          Select some icons:
-        </div>
-        <div className="iconsGrid">
+          </div>
           {
-            icons.map((icon, index) =>
-              <IconButton
-                icon={icon}
-                key={index}
-                selected={(selectedIcons.filter(selectedIcon => selectedIcon === icon).length > 0)}
-                onButtonClicked={(selected) => onIconButtonClicked(icon, selected)}
-              />
-            )
+            (names.length > 0) &&
+            <>
+              <h2>
+                Preview
+          </h2>
+              <div className={"previewBox"}>
+                <Label name={names[0]} height={parseFloat(lineHeight)} icons={selectedIcons} />
+              </div>
+            </>
           }
         </div>
-        {
-          (selectedIcons.length > 0) &&
-          <button
-            className="button"
-            onClick={() => setIcons([])}>
-            Clear
+        <div className="iconsPanel">
+          <div className={"iconsHeader"}>Select some icons:
+          {
+              (selectedIcons.length > 0) &&
+              <button
+                className="button"
+                onClick={() => setIcons([])}>
+                Clear
           </button>
-        }
-        {
-          (names.length > 0) &&
-          <>
-            <div className="previewHeading">
-              Preview
+            }
           </div>
-            <div className={"previewBox"}>
-              <Label name={names[0]} height={parseFloat(lineHeight)} icons={selectedIcons} />
-            </div>
-            <button onClick={() => window.print()} className="button printButton" >Print</button>
-          </>
+          <div className="iconsGrid">
+            {
+              icons.map((icon, index) =>
+                <IconButton
+                  icon={icon}
+                  key={index}
+                  selected={(selectedIcons.filter(selectedIcon => selectedIcon === icon).length > 0)}
+                  onButtonClicked={(selected) => onIconButtonClicked(icon, selected)}
+                />
+              )
+            }
+          </div>
+        </div>
+      </div>
+      <div className="footer">
+        <a target="_blank" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon title="View code" icon={faGithub} size={"lg"} /></a>
+        {
+
+          <button onClick={() => window.print()} className="button" >Print</button>
         }
-        <a target="_blank" title="View code" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon icon={faGithub} /> </a>
       </div>
       <div className="toPrint">
         {

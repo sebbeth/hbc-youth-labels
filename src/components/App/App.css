@@ -42,15 +42,29 @@
 
 .App {
     font-family: brandon-grotesque;
-    text-align: center;
     color: #272a32;
-    height: 100vh;
-    width: 100vw;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
-.app-heading {
-    padding: 1rem;
+.optionsPanel {
+    margin: 2rem;
+    text-align: left;
+}
+
+.optionLine {
+    margin: 1rem 0;
+}
+
+.iconsPanel {
+    margin: 2rem;
+}
+
+.iconsHeader {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .iconsGrid {
@@ -58,17 +72,14 @@
     flex-wrap: wrap;
     margin: 2rem 0;
     justify-content: center;
-    max-height: 20rem;
+    max-height: 72vh;
     width: 100%;
-    height: 20rem;
-}
-
-.previewHeading {
-    padding: 1rem;
+    overflow: scroll;
 }
 
 .previewBox {
     display: flex;
+    border: #f1f1f1 2px solid;
     justify-content: center;
 }
 
@@ -89,10 +100,6 @@
     border-color: #0d426a61;
 }
 
-.printButton {
-    margin-top: 2rem;
-}
-
 .toPrint {
     display: none;
     font-family: 'BrandonGrotesque', Fallback, sans-serif;
@@ -100,6 +107,23 @@
     grid-gap: 0.1cm;
     margin: 0.1cm;
     flex-wrap: wrap;
+}
+
+.footer {
+    padding: 1rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    background-color: #f1f1f1;
+}
+
+a:visited {
+    color: black;
 }
 
 @media print {
@@ -113,6 +137,9 @@
     }
     .toPrint {
         display: grid;
+    }
+    .footer {
+        display: none;
     }
 }
 

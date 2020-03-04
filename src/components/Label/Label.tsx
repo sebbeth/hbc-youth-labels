@@ -12,7 +12,7 @@ export interface ILabelProps {
 
 const Label: React.FC<ILabelProps> = (props) => {
     return (
-        <div className="container" style={{ height: `${props.height + 0.2}mm` }}>
+        <div className="container" style={{ height: `${props.height - 0.1}mm` }}>
             <div className="label">
                 <div className={"icons"}>
                     {
