@@ -1,33 +1,50 @@
 import React from 'react';
 import './App.css';
-import { mockNames } from '../../helpers/MockData';
+import { mockPeople } from '../../helpers/MockData';
 import Label from '../Label/Label';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import IconButton from '../IconButton/IconButton';
 import { availableIcons } from '../../helpers/FontAwesome.helper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PeopleList from '../PeopleList/PeopleList';
+import Person from '../../models/Person';
 library.add(...availableIcons)
 
 function App() {
 
-  const [names, setNames] = React.useState<string[]>((window.location.href.includes("localhost")) ? mockNames : []);
-
+  const [people, setPeople] = React.useState<Person[]>((window.location.href.includes("localhost")) ? mockPeople : []);
+  const [selectedPerson, setSelectedPerson] = React.useState<number>(-1);
   const [lineHeight, setLineHeight] = React.useState<string>("34.7");
-  const [selectedIcons, setSelectedIcons] = React.useState<string[]>(getIcons());
   const fileInputRef = React.createRef<HTMLInputElement>();
   const icons = availableIcons.map(icon => icon.iconName);
+
+
+  // React.useEffect(() => {
+  //   // const p = people.find((person) => person.id === selectedPerson.id);
+  //   setPeople([...people]);
+  // },[selectedPerson])
+
   function submit() {
     if (fileInputRef.current?.files?.length === 1) {
       const file = fileInputRef.current?.files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target) {
+          // TODO lift to helper method
           let contents = event.target.result?.toString().replace(/"/g, '');
           let lines = contents?.split('\n');
           lines?.splice(0, 1); // Ignore the first line
           lines = lines?.filter(line => line !== "");
-          if (lines) setNames(lines);
+          const people: Person[] = [];
+          lines?.forEach(line => {
+            const columns = line.split(',');
+            if (columns.length >= 2) {
+              const person = new Person({ name: columns[0], id: columns[1] });
+              people.push(person);
+            }
+          });
+          if (people) setPeople(people);
         }
       }
       reader.readAsText(file);
@@ -35,21 +52,28 @@ function App() {
   }
 
   function setIcons(icons: string[]) {
-    window.localStorage.setItem("icons", JSON.stringify(icons));
-    setSelectedIcons(icons);
   }
 
-  function onIconButtonClicked(icon: string, enabled: boolean) {
-    const newSelected = [...selectedIcons];
-    if (enabled) {
-      newSelected.push(icon);
-      setIcons(newSelected);
-    } else {
-      newSelected.splice(newSelected.indexOf(icon), 1);
+  function getSelectedPerson() {
+    if (selectedPerson >= 0) {
+      return people[selectedPerson];
     }
-    setIcons(newSelected);
+    return new Person();
+  }
 
 
+  function onIconButtonClicked(icon: string, enabled: boolean) {
+    console.log(icon, enabled);
+    const person = getSelectedPerson();
+    if (person !== null) {
+      const icons = person.icons;
+      if (enabled) {
+        icons.push(icon);
+      } else {
+        icons.splice(icons.indexOf(icon), 1)
+      }
+      setPeople([...people]);
+    }
   }
 
   return (
@@ -67,14 +91,18 @@ function App() {
             Label height (mm):
           <input value={lineHeight} type="text" onChange={(e) => setLineHeight(e.target.value)} />
           </div>
+          <PeopleList
+            people={people}
+            onPersonSelect={(person => setSelectedPerson(people.indexOf(person)))}
+          />
           {
-            (names.length > 0) &&
+            (people.length > 0) &&
             <>
               <h2>
                 Preview
           </h2>
               <div className={"previewBox"}>
-                <Label name={names[0]} height={parseFloat(lineHeight)} icons={selectedIcons} />
+                <Label name={getSelectedPerson().name} height={parseFloat(lineHeight)} icons={getSelectedPerson().icons} />
               </div>
             </>
           }
@@ -82,7 +110,7 @@ function App() {
         <div className="iconsPanel">
           <div className={"iconsHeader"}>Select some icons:
           {
-              (selectedIcons.length > 0) &&
+              (getSelectedPerson().icons.length > 0) &&
               <button
                 className="button"
                 onClick={() => setIcons([])}>
@@ -96,7 +124,8 @@ function App() {
                 <IconButton
                   icon={icon}
                   key={index}
-                  selected={(selectedIcons.filter(selectedIcon => selectedIcon === icon).length > 0)}
+                  disabled={selectedPerson === -1}
+                  selected={(getSelectedPerson().icons.filter(selectedIcon => selectedIcon === icon).length > 0)}
                   onButtonClicked={(selected) => onIconButtonClicked(icon, selected)}
                 />
               )
@@ -105,17 +134,15 @@ function App() {
         </div>
       </div>
       <div className="footer">
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon title="View code" icon={faGithub} size={"lg"} /></a>
-        {
-
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/sebbeth/hbc-youth-labels"><FontAwesomeIcon title="View code" color={"black"} icon={faGithub} size={"lg"} /></a>
+        <button onClick={() => setPeople([])} className="button" >Clear</button>
           <button onClick={() => window.print()} className="button" >Print</button>
-        }
       </div>
       <div className="toPrint">
         {
-          (names.length > 0) ?
-            names.map((name, index) => {
-              return (<Label key={index} name={name} height={parseFloat(lineHeight)} icons={selectedIcons} />)
+          (people.length > 0) ?
+            people.map((person, index) => {
+              return (<Label key={index} name={person.name} height={parseFloat(lineHeight)} icons={person.icons} />)
             })
 
             :
