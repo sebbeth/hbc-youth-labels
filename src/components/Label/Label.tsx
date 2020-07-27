@@ -27,7 +27,7 @@ const Label: React.FC<ILabelProps> = (props) => {
                 <div className={"logoAndText"}>
                     <img alt={"Youth Logo"} className={"logo"} src={youthLogo} />
                     <div className={"body"}>
-                        <div className={"name"}>{parseName(props.name)}</div>
+                        <div className={"name"}>{props.name}</div>
                         <div className={"youCanCallMe"}>But you can call me...</div>
                         <hr className={"line"} />
                     </div>
@@ -37,14 +37,6 @@ const Label: React.FC<ILabelProps> = (props) => {
     );
 }
 
-function parseName(name: string) {
-    if (name.indexOf("(") !== -1) {
-        const regex = /\(([^)]+)\)/;
-        const matches = name.match(regex);
-        if (matches) return matches[1];
-    } else {
-        return name;
-    }
-}
+
 
 export default Label;

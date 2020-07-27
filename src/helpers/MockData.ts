@@ -36,7 +36,6 @@ export const mockPeople = [
     new Person({ name: "Oliver", id: "33" }),
     new Person({ name: "Luke", id: "34" }),
     new Person({ name: "Lucy", id: "35" }),
-    new Person({ name: "Kingnew Person({name:", id: "36" }),
     new Person({ name: "Valentina (Val)", id: "37" }),
     new Person({ name: "Sebastian", id: "38" })
 ];
