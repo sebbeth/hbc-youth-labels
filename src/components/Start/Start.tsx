@@ -1,8 +1,5 @@
 import React from 'react';
 import './Start.css';
-import youthLogo from './youth-logo.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 export interface IStartProps {
     onSubmit(file: File): void;
 }

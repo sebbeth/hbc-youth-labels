@@ -1,5 +1,4 @@
 import Person from "../models/Person";
-import { mockPeople } from "./MockData";
 
 
 export function addIcon(icons: string[], icon: string) {

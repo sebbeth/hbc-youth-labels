@@ -74,17 +74,17 @@ function App() {
 
   function onIconButtonClicked(icon: string, enabled: boolean) {
 
-    const person = getSelectedPerson();
+    const selected = getSelectedPerson();
     const peopleToMutate = (selectedPerson === -1)
       ? people
-      : [person];
+      : [selected];
 
-    peopleToMutate.map(p => {
-      let icons = p.icons;
+    peopleToMutate.forEach(person => {
+      const icons = person.icons;
       if (enabled) {
-        icons = addIcon(icons, icon);
+        addIcon(icons, icon);
       } else {
-        icons = removeIcon(icons, icon);
+        removeIcon(icons, icon);
       }
     });
     setPeople([...people]);
@@ -166,18 +166,6 @@ function App() {
       </div>
     </>
   );
-}
-
-/**
- * returns the icons object from localStorage
- */
-function getIcons() {
-  const iconsString = window.localStorage.getItem("icons");
-  if (iconsString) {
-    return JSON.parse(iconsString);
-  } else {
-    return [];
-  }
 }
 
 export default App;
