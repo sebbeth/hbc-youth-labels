@@ -6,33 +6,61 @@ import Person from '../../models/Person';
 
 export interface IPeopleListProps {
     people: Person[];
-    onPersonSelect(person: Person): void;
+    selectedPerson: number;
+    onPersonSelect(index: number): void;
+    onPersonAdd(): void;
+    onPersonDelete(index: number): void;
 }
 
 const PeopleList: React.FC<IPeopleListProps> = (props) => {
-    const { people, onPersonSelect } = props;
+    const { people, selectedPerson, onPersonSelect, onPersonAdd, onPersonDelete } = props;
     return (
         <div className={"peopleList"}>
-            {
-                people.map(
-                    (person, index) =>
-                        <div
-                            className="peopleListRow"
-                            onClick={() => onPersonSelect(person)}
-                        >
-                            <div>{person.name}</div>
-                            <div>
-                                {person.icons.map((icon, index) =>
-                                    <FontAwesomeIcon
-                                        key={index}
-                                        icon={icon as IconProp}
-                                        className="icon"
-                                    />
-                                )}
-                            </div>
-                        </div>
-                )
+            <div className={"peopleListHeader"}>
+                <h2>Labels</h2>
+                {
+                selectedPerson >= 0 &&
+                <button onClick={() => onPersonSelect(-1)}>Deselect</button>
             }
+                </div>
+           
+                <div className={"header peopleListRow"}>
+                    <div>Name</div>
+                    <div>Icons</div>
+                    <div>Delete</div>
+                </div>
+            <div className="itemList">
+                
+                {
+                    people.map(
+                        (person, index) =>
+                            <div
+                                className={(index === selectedPerson) ? "peopleListRow selected" : "peopleListRow"}
+                                onClick={() => onPersonSelect(index)}
+                            >
+                                <div>{person.name}</div>
+                                <div>
+                                    {person.icons.map((icon, index) =>
+                                        <FontAwesomeIcon
+                                            key={index}
+                                            icon={icon as IconProp}
+                                            className="icon"
+                                        />
+                                    )}
+                                </div>
+                                <FontAwesomeIcon
+                                            key={index}
+                                            icon={"trash-alt" as IconProp}
+                                            className="icon deleteButton"
+                                            onClick={() => onPersonDelete(index)}
+                                        />
+                            </div>
+                    )
+                }
+                <div className={"peopleListRow"}>
+                    <button onClick={() => onPersonAdd()}>Add Row</button>
+                </div>
+            </div>
         </div>
     );
 }

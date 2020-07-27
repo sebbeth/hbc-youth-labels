@@ -44,20 +44,28 @@
     font-family: brandon-grotesque;
     color: #272a32;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: calc(100vh - 4rem) 4rem;
 }
 
-.optionsPanel {
-    margin: 2rem;
+.editor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     text-align: left;
+    max-height: calc(100vh - 6rem);
+}
+
+.panel {
+    margin: 1rem;
+    max-height: inherit;
+}
+
+.personPanel {
+    display: grid;
+    grid-template-rows: 1rem 1fr 14rem;
 }
 
 .optionLine {
     margin: 1rem 0;
-}
-
-.iconsPanel {
-    margin: 2rem;
 }
 
 .iconsHeader {
@@ -75,6 +83,8 @@
     max-height: 72vh;
     width: 100%;
     overflow: scroll;
+    background-color: #f5f4f4;
+    border-radius: 5px;
 }
 
 .previewBox {
@@ -110,7 +120,7 @@
 }
 
 .footer {
-    padding: 1rem;
+    padding: 0.5rem;
     position: absolute;
     bottom: 0;
     right: 0;
@@ -122,8 +132,26 @@
     background-color: #f1f1f1;
 }
 
+.footer-items {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.footer-items * {
+    margin: 0 0.5rem;
+}
+
 a:visited {
     color: black;
+}
+
+h2 {
+    margin: 0.5rem 0;
+}
+
+.icon {
+    margin-left: 1.5mm;
 }
 
 @media print {

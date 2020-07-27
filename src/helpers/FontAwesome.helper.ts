@@ -111,5 +111,6 @@ fa.faThermometerEmpty,
 fa.faWater,
 fa.faWheelchair,
 fa.faWifi,
-fa.faWrench
+fa.faWrench,
+fa.faTrashAlt
 ];
