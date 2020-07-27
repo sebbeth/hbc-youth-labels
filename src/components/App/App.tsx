@@ -20,7 +20,7 @@ function App() {
   const [lineHeight, setLineHeight] = React.useState<string>("34.7");
   const icons = availableIcons.map(icon => icon.iconName);
   React.useEffect(() => {
-  },[people]);
+  }, [people]);
 
   function loadPeople(file: File) {
     const reader = new FileReader();
@@ -40,8 +40,10 @@ function App() {
         });
         const peopleWithIcons = loadIconsFromStorage();
         if (peopleWithIcons) {
-          setPeople([...addIconsToPeople(people,peopleWithIcons)]);
+          addIconsToPeople(people, peopleWithIcons);
         }
+        setPeople([...people]);
+
       }
     }
     reader.readAsText(file);
