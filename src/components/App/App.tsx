@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { mockPeople } from '../../helpers/MockData';
 import Label from '../Label/Label';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -10,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PeopleList from '../PeopleList/PeopleList';
 import Person from '../../models/Person';
 import Start from '../Start/Start';
-import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople, loadMessageFromStorage } from '../../helpers/Label.helpers';
+import { addIcon, removeIcon, saveIcons } from '../../helpers/Label.helpers';
 import { useMessage, usePeople, usePerson } from '../../hooks/Label.hooks';
 import { faUndo } from '@fortawesome/free-solid-svg-icons';
 library.add(...availableIcons)

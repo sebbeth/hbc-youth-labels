@@ -62,14 +62,14 @@ export function usePerson(people: Person[]) {
         if (people === null || people.length <= selectedPersonIndex) {
             setSelectedPersonIndex(-1);
         }
-    }, [people])
+    }, [people, selectedPersonIndex])
 
     const selectedPerson = React.useMemo(() => {
         if (people.length > selectedPersonIndex && selectedPersonIndex >= 0) {
             return people[selectedPersonIndex];
         }
         return new Person();
-    }, [selectedPersonIndex]);
+    }, [selectedPersonIndex, people]);
 
     function setSelectedPerson(index: number) {
         setSelectedPersonIndex(index);
