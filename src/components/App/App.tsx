@@ -10,51 +10,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PeopleList from '../PeopleList/PeopleList';
 import Person from '../../models/Person';
 import Start from '../Start/Start';
-import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople } from '../../helpers/Label.helpers';
+import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople, loadMessageFromStorage } from '../../helpers/Label.helpers';
+import { useMessage, usePeople, usePerson } from '../../hooks/Label.hooks';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 library.add(...availableIcons)
+
+const defaultLineHeight: string = "34.7";
 
 function App() {
 
-  const [people, setPeople] = React.useState<Person[]>((window.location.href.includes("localhost")) ? mockPeople : []);
-  const [selectedPerson, setSelectedPerson] = React.useState<number>(-1);
-  const [lineHeight, setLineHeight] = React.useState<string>("34.7");
-  const icons = availableIcons.map(icon => icon.iconName);
-  React.useEffect(() => {
-  }, [people]);
-
-  function loadPeople(file: File) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target) {
-        let contents = event.target.result?.toString().replace(/"/g, '');
-        let lines = contents?.split('\n');
-        lines?.splice(0, 1); // Ignore the first line
-        lines = lines?.filter(line => line !== "");
-        const people: Person[] = [];
-        lines?.forEach(line => {
-          const columns = line.split(',');
-          if (columns.length >= 2) {
-            const person = new Person({ name: columns[0], id: columns[1] });
-            people.push(person);
-          }
-        });
-        const peopleWithIcons = loadIconsFromStorage();
-        if (peopleWithIcons) {
-          addIconsToPeople(people, peopleWithIcons);
-        }
-        setPeople([...people]);
-
-      }
-    }
-    reader.readAsText(file);
-  }
-
-  function getSelectedPerson() {
-    if (people.length > selectedPerson && selectedPerson >= 0) {
-      return people[selectedPerson];
-    }
-    return new Person();
-  }
+  const { people, setPeople, loadPeople } = usePeople();
+  const { selectedPerson, selectedPersonIndex, setSelectedPerson } = usePerson(people);
+  const [lineHeight, setLineHeight] = React.useState<string>(defaultLineHeight);
+  const { message, updateMessage } = useMessage();
+  const icons = React.useMemo(() => availableIcons.map(icon => icon.iconName), []);
   function deletePerson(personIndex: number) {
     if (people.length > personIndex) {
       people.splice(personIndex, 1);
@@ -76,10 +45,9 @@ function App() {
 
   function onIconButtonClicked(icon: string, enabled: boolean) {
 
-    const selected = getSelectedPerson();
-    const peopleToMutate = (selectedPerson === -1)
+    const peopleToMutate = (selectedPersonIndex === -1)
       ? people
-      : [selected];
+      : [selectedPerson];
 
     peopleToMutate.forEach(person => {
       const icons = person.icons;
@@ -106,32 +74,54 @@ function App() {
               <div className="panel">
                 <PeopleList
                   people={people}
-                  selectedPerson={selectedPerson}
+                  selectedPersonIndex={selectedPersonIndex}
                   onPersonSelect={(personIndex => setSelectedPerson(personIndex))}
                   onPersonAdd={() => addPerson()}
                   onPersonDelete={(personIndex) => deletePerson(personIndex)}
                 />
               </div>
               <div className="panel personPanel">
-                <div className={"iconsHeader"}>{(selectedPerson >= 0) ? "Add icon to selected label" : "Add icon to all labels"}</div>
+                <div className={"iconsHeader"}>{(selectedPersonIndex >= 0) ? "Add icon to selected label" : "Add icon to all labels"}</div>
                 <div className="iconsGrid">
                   {
                     icons.map((icon, index) =>
                       <IconButton
                         icon={icon}
                         key={index}
-                        selected={(getSelectedPerson().icons.filter(selectedIcon => selectedIcon === icon).length > 0)}
+                        selected={(selectedPerson.icons.filter(selectedIcon => selectedIcon === icon).length > 0)}
                         onButtonClicked={(selected) => onIconButtonClicked(icon, selected)}
                       />
                     )
                   }
+                </div>
+                <div>
+                  <h2>Message</h2>
+                  <input
+                    value={message}
+                    type="text"
+                    className={"messageField"}
+                    onChange={(e) => updateMessage(e.target.value)}
+                  />
+                  <FontAwesomeIcon
+                    title="Reset message"
+                    color={"black"}
+                    icon={faUndo}
+                    className={"resetButton"}
+                    onClick={() => updateMessage(null)}
+                    size={"lg"}
+                  />
                 </div>
                 {
                   (people.length > 0) &&
                   <div>
                     <h2>Preview</h2>
                     <div className={"previewBox"}>
-                      <Label name={getSelectedPerson().name} height={parseFloat(lineHeight)} icons={getSelectedPerson().icons} />
+                      <Label
+                        name={selectedPerson.name}
+                        height={parseFloat(lineHeight)}
+                        message={message}
+                        icons={selectedPerson.icons}
+                      />
                     </div>
                   </div>
                 }
@@ -159,7 +149,12 @@ function App() {
         {
           (people.length > 0) ?
             people.map((person, index) => {
-              return (<Label key={index} name={person.name} height={parseFloat(lineHeight)} icons={person.icons} />)
+              return (<Label
+                key={index}
+                name={person.name}
+                message={message}
+                height={parseFloat(lineHeight)}
+                icons={person.icons} />)
             })
 
             :

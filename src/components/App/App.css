@@ -59,9 +59,13 @@
     max-height: inherit;
 }
 
+.resetButton {
+    font-size: inherit;
+}
+
 .personPanel {
     display: grid;
-    grid-template-rows: 1rem 1fr 14rem;
+    grid-template-rows: 1rem 1fr 5rem 12rem;
 }
 
 .optionLine {
@@ -78,7 +82,7 @@
 .iconsGrid {
     display: flex;
     flex-wrap: wrap;
-    margin: 2rem 0;
+    margin: 1rem 0;
     justify-content: center;
     max-height: 72vh;
     width: 100%;
@@ -89,8 +93,12 @@
 
 .previewBox {
     display: flex;
+    justify-content: start;
+}
+
+.previewBox .container {
     border: #f1f1f1 2px solid;
-    justify-content: center;
+    padding: 0 1rem;
 }
 
 .button {
@@ -152,6 +160,11 @@ h2 {
 
 .icon {
     margin-left: 1.5mm;
+}
+
+.messageField {
+    width: 17rem;
+    margin-right: 1rem;
 }
 
 @media print {
