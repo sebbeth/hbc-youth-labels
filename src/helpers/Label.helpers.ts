@@ -41,3 +41,24 @@ export function loadIconsFromStorage() {
         return null;
     }
 }
+
+export function loadMessageFromStorage() {
+    try {
+        const message = window.localStorage.getItem("hbc-youth-label-message");
+        if (!message) {
+            return null;
+        }
+        return message;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+export function saveMessage(message: string) {
+    window.localStorage.setItem("hbc-youth-label-message", message);
+}
+
+export function clearMessage() {
+    window.localStorage.removeItem("hbc-youth-label-message");
+}

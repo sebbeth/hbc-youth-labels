@@ -45,6 +45,11 @@
     font-weight: bold;
 }
 
+.header:hover {
+    background-color: #ffffff00;
+    font-weight: bold;
+}
+
 .deleteButton:hover {
     color: rgb(197, 0, 0);
 }

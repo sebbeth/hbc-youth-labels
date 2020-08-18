@@ -10,17 +10,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PeopleList from '../PeopleList/PeopleList';
 import Person from '../../models/Person';
 import Start from '../Start/Start';
-import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople } from '../../helpers/Label.helpers';
+import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople, loadMessageFromStorage } from '../../helpers/Label.helpers';
+import { useMessage } from '../../hooks/Label.hooks';
+import { faUndo } from '@fortawesome/free-solid-svg-icons';
 library.add(...availableIcons)
+
+const defaultLineHeight: string = "34.7";
 
 function App() {
 
   const [people, setPeople] = React.useState<Person[]>((window.location.href.includes("localhost")) ? mockPeople : []);
   const [selectedPerson, setSelectedPerson] = React.useState<number>(-1);
-  const [lineHeight, setLineHeight] = React.useState<string>("34.7");
+  const [lineHeight, setLineHeight] = React.useState<string>(defaultLineHeight);
+  const { message, updateMessage } = useMessage();
   const icons = availableIcons.map(icon => icon.iconName);
-  React.useEffect(() => {
-  }, [people]);
 
   function loadPeople(file: File) {
     const reader = new FileReader();
@@ -126,12 +129,34 @@ function App() {
                     )
                   }
                 </div>
+                <div>
+                  <h2>Message</h2>
+                  <input
+                    value={message}
+                    type="text"
+                    className={"messageField"}
+                    onChange={(e) => updateMessage(e.target.value)}
+                  />
+                  <FontAwesomeIcon
+                    title="Reset message"
+                    color={"black"}
+                    icon={faUndo}
+                    className={"resetButton"}
+                    onClick={() => updateMessage(null)}
+                    size={"lg"}
+                  />
+                </div>
                 {
                   (people.length > 0) &&
                   <div>
                     <h2>Preview</h2>
                     <div className={"previewBox"}>
-                      <Label name={getSelectedPerson().name} height={parseFloat(lineHeight)} icons={getSelectedPerson().icons} />
+                      <Label
+                        name={getSelectedPerson().name}
+                        height={parseFloat(lineHeight)}
+                        message={message}
+                        icons={getSelectedPerson().icons}
+                      />
                     </div>
                   </div>
                 }
@@ -159,7 +184,12 @@ function App() {
         {
           (people.length > 0) ?
             people.map((person, index) => {
-              return (<Label key={index} name={person.name} height={parseFloat(lineHeight)} icons={person.icons} />)
+              return (<Label
+                key={index}
+                name={person.name}
+                message={message}
+                height={parseFloat(lineHeight)}
+                icons={person.icons} />)
             })
 
             :

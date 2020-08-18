@@ -7,6 +7,7 @@ export interface ILabelProps {
     name: string;
     icons: string[];
     height: number;
+    message: string;
 }
 
 const Label: React.FC<ILabelProps> = (props) => {
@@ -28,7 +29,7 @@ const Label: React.FC<ILabelProps> = (props) => {
                     <img alt={"Youth Logo"} className={"logo"} src={youthLogo} />
                     <div className={"body"}>
                         <div className={"name"}>{props.name}</div>
-                        <div className={"youCanCallMe"}>But you can call me...</div>
+                        <div className={"message"}>{props.message}</div>
                         <hr className={"line"} />
                     </div>
                 </div>
