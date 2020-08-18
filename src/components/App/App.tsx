@@ -11,7 +11,7 @@ import PeopleList from '../PeopleList/PeopleList';
 import Person from '../../models/Person';
 import Start from '../Start/Start';
 import { addIcon, removeIcon, saveIcons, loadIconsFromStorage, addIconsToPeople, loadMessageFromStorage } from '../../helpers/Label.helpers';
-import { useMessage } from '../../hooks/Label.hooks';
+import { useMessage, usePeople, usePerson } from '../../hooks/Label.hooks';
 import { faUndo } from '@fortawesome/free-solid-svg-icons';
 library.add(...availableIcons)
 
@@ -19,45 +19,11 @@ const defaultLineHeight: string = "34.7";
 
 function App() {
 
-  const [people, setPeople] = React.useState<Person[]>((window.location.href.includes("localhost")) ? mockPeople : []);
-  const [selectedPerson, setSelectedPerson] = React.useState<number>(-1);
+  const { people, setPeople, loadPeople } = usePeople();
+  const { selectedPerson, selectedPersonIndex, setSelectedPerson } = usePerson(people);
   const [lineHeight, setLineHeight] = React.useState<string>(defaultLineHeight);
   const { message, updateMessage } = useMessage();
-  const icons = availableIcons.map(icon => icon.iconName);
-
-  function loadPeople(file: File) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target) {
-        let contents = event.target.result?.toString().replace(/"/g, '');
-        let lines = contents?.split('\n');
-        lines?.splice(0, 1); // Ignore the first line
-        lines = lines?.filter(line => line !== "");
-        const people: Person[] = [];
-        lines?.forEach(line => {
-          const columns = line.split(',');
-          if (columns.length >= 2) {
-            const person = new Person({ name: columns[0], id: columns[1] });
-            people.push(person);
-          }
-        });
-        const peopleWithIcons = loadIconsFromStorage();
-        if (peopleWithIcons) {
-          addIconsToPeople(people, peopleWithIcons);
-        }
-        setPeople([...people]);
-
-      }
-    }
-    reader.readAsText(file);
-  }
-
-  function getSelectedPerson() {
-    if (people.length > selectedPerson && selectedPerson >= 0) {
-      return people[selectedPerson];
-    }
-    return new Person();
-  }
+  const icons = React.useMemo(() => availableIcons.map(icon => icon.iconName), []);
   function deletePerson(personIndex: number) {
     if (people.length > personIndex) {
       people.splice(personIndex, 1);
@@ -79,10 +45,9 @@ function App() {
 
   function onIconButtonClicked(icon: string, enabled: boolean) {
 
-    const selected = getSelectedPerson();
-    const peopleToMutate = (selectedPerson === -1)
+    const peopleToMutate = (selectedPersonIndex === -1)
       ? people
-      : [selected];
+      : [selectedPerson];
 
     peopleToMutate.forEach(person => {
       const icons = person.icons;
@@ -109,21 +74,21 @@ function App() {
               <div className="panel">
                 <PeopleList
                   people={people}
-                  selectedPerson={selectedPerson}
+                  selectedPersonIndex={selectedPersonIndex}
                   onPersonSelect={(personIndex => setSelectedPerson(personIndex))}
                   onPersonAdd={() => addPerson()}
                   onPersonDelete={(personIndex) => deletePerson(personIndex)}
                 />
               </div>
               <div className="panel personPanel">
-                <div className={"iconsHeader"}>{(selectedPerson >= 0) ? "Add icon to selected label" : "Add icon to all labels"}</div>
+                <div className={"iconsHeader"}>{(selectedPersonIndex >= 0) ? "Add icon to selected label" : "Add icon to all labels"}</div>
                 <div className="iconsGrid">
                   {
                     icons.map((icon, index) =>
                       <IconButton
                         icon={icon}
                         key={index}
-                        selected={(getSelectedPerson().icons.filter(selectedIcon => selectedIcon === icon).length > 0)}
+                        selected={(selectedPerson.icons.filter(selectedIcon => selectedIcon === icon).length > 0)}
                         onButtonClicked={(selected) => onIconButtonClicked(icon, selected)}
                       />
                     )
@@ -152,10 +117,10 @@ function App() {
                     <h2>Preview</h2>
                     <div className={"previewBox"}>
                       <Label
-                        name={getSelectedPerson().name}
+                        name={selectedPerson.name}
                         height={parseFloat(lineHeight)}
                         message={message}
-                        icons={getSelectedPerson().icons}
+                        icons={selectedPerson.icons}
                       />
                     </div>
                   </div>
