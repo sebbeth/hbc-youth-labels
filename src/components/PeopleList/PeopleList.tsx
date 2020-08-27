@@ -35,6 +35,7 @@ const PeopleList: React.FC<IPeopleListProps> = (props) => {
                     people.map(
                         (person, index) =>
                             <div
+                                key={index}
                                 className={(index === selectedPersonIndex) ? "peopleListRow selected" : "peopleListRow"}
                                 onClick={() => onPersonSelect(index)}
                             >

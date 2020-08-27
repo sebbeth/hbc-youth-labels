@@ -9,15 +9,15 @@ export default class Person {
         this.name = this.parseName(item.name) ?? "";
         this.id = item.id ?? "";
     }
-    
+
     // Parse name to remove prefered name in parentheses
     private parseName(name: string) {
         if (name.indexOf("(") !== -1) {
-            const regex = /(.*)\([^)]+\)/;
+            const regex = /\(([^)]+)\)/;
             const matches = name.match(regex);
-            if (matches) return matches[1];
+            if (matches) return matches[1].trim();
         } else {
-            return name;
+            return name.trim();
         }
     }
 }
